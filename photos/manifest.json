@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 {
   "version": 1,
   "url": "https://github.com/JareckDaniels/atlas_grzybow/releases/download/photos-v1/photos.zip",
   "size": 27787264,
   "count": 153
 }
+=======
+{
+ "version": 1,
+ "url": "https://github.com/JareckDaniels/atlas_grzybow/releases/download/photos-v1/photos.zip",
+ "size": 27736726,
+ "count": 153
+}
+>>>>>>> 1a01b992b55d609fe2a13fce9629ec9a012bdbfd
