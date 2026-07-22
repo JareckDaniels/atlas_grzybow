@@ -134,6 +134,26 @@ class _DetalScreenState extends State<DetalScreen> {
                 ],
                 const SizedBox(height: 12),
                 BadgeJadalnosc(s.jadalnosc),
+                if (s.zdjeciaMeta.isNotEmpty &&
+                    _strona < s.zdjeciaMeta.length) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.photo_camera_outlined,
+                          size: 13, color: t.colorScheme.outline),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          'fot. ${s.zdjeciaMeta[_strona].podpis}',
+                          style: t.textTheme.bodySmall?.copyWith(
+                              color: t.colorScheme.outline, fontSize: 11.5),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
                 if (s.cechyKluczowe != null) ...[
                   const SizedBox(height: 18),
                   Container(

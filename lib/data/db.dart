@@ -46,7 +46,7 @@ class AtlasDb {
     return openDatabase(path, readOnly: false);
   }
 
-  static const _wersjaWbudowana = 3;
+  static const _wersjaWbudowana = 4;
 
   Future<String?> meta(String klucz) async {
     final d = await db;
@@ -204,11 +204,19 @@ class AtlasDb {
     }
 
     final ph = await d.rawQuery('''
-      SELECT species_id, plik FROM photos
+      SELECT species_id, plik, autor, licencja, zrodlo_url FROM photos
       WHERE species_id IN ($ids) ORDER BY kolejnosc
     ''');
     for (final m in ph) {
-      byId[m['species_id'] as int]?.zdjecia.add(m['plik'] as String);
+      final s = byId[m['species_id'] as int];
+      if (s == null) continue;
+      s.zdjecia.add(m['plik'] as String);
+      s.zdjeciaMeta.add(Zdjecie(
+        plik: m['plik'] as String,
+        autor: m['autor'] as String?,
+        licencja: m['licencja'] as String?,
+        zrodlo: m['zrodlo_url'] as String?,
+      ));
     }
   }
 

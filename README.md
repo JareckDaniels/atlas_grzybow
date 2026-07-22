@@ -8,6 +8,9 @@ Offline'owy atlas grzybów Polski. Baza w APK, zdjęcia pobierane przy pierwszym
 śmiertelne), 7 gatunków śmiertelnie trujących, 32 opisy zastosowania
 kulinarnego.
 
+152 zdjęcia dla wszystkich 51 gatunków (Wikimedia Commons, licencje CC BY /
+CC BY-SA / public domain — autor i licencja podawane na karcie gatunku).
+
 **38 z 51 gatunków zweryfikowane** z dwoma źródłami: atlasem Marka Snowarskiego
 (grzyby.pl) i przewodnikiem Markusa Flücka „Jaki to grzyb?". Szczegóły, lista
 poprawek i wykaz tego, co pozostaje niezweryfikowane:
@@ -69,6 +72,7 @@ tools/
   build_db.py                generator bazy + walidacja danych
   make_icon.py               generator ikony aplikacji (uruchamiany w CI)
   parse_atlas.py             czytnik atlasu grzyby.pl do weryfikacji danych
+  sql_do_gatunkow.py         konwerter photos.sql -> blok PHOTOS w gatunki.py
   fetch_photos.py            pobieranie z Commons + weryfikacja + pakowanie
 photos/
   manifest.json              wskazuje aplikacji, skąd pobrać paczkę zdjęć

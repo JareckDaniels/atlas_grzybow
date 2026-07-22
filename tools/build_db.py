@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gatunki import (SPECIES, KOLORY_SP, SIEDL_SP, LOOKALIKES,  # noqa: E402
-                     KUCHNIA)
+                     KUCHNIA, PHOTOS)
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "atlas.db"
 
@@ -198,6 +198,19 @@ def waliduj():
     if len(par) != len(LOOKALIKES):
         bledy.append("LOOKALIKES: zduplikowane pary")
 
+    # Zdjecia: kazde musi wskazywac na istniejacy gatunek i miec licencje.
+    for sid, lista in PHOTOS.items():
+        if sid not in ids:
+            bledy.append(f"PHOTOS: nieznane species_id {sid}")
+            continue
+        for plik, autor, lic, url in lista:
+            if not plik.endswith(".webp"):
+                bledy.append(f"[{sid}] zdjecie '{plik}' nie jest .webp")
+            if not lic or lic.strip() in ("", "?"):
+                bledy.append(f"[{sid}] '{plik}': brak licencji")
+            if not url.startswith("http"):
+                bledy.append(f"[{sid}] '{plik}': brak zrodla")
+
     # Opisy kulinarne: tylko dla jadalnych, obowiazkowe dla wszystkich.
     jadalne = {s[0] for s in SPECIES if s[5] in ("jadalny", "warunkowo")}
     nazwy = {s[0]: s[1] for s in SPECIES}
@@ -273,16 +286,16 @@ def main():
         "INSERT INTO lookalikes(species_id,similar_id,roznice,waga) "
         "VALUES (?,?,?,?)", LOOKALIKES)
 
-    # Placeholdery zdjec - nazwy plikow wynikaja z nazwy lacinskiej.
-    for s in SPECIES:
-        slug = s[2].lower().replace(" ", "_").replace("-", "_")
-        for i in range(1, 4):
+    # Zdjecia z PHOTOS (wygenerowane przez fetch_photos.py).
+    for sid, lista in PHOTOS.items():
+        for k, (plik, autor, lic, url) in enumerate(lista):
             cur.execute(
-                "INSERT INTO photos(species_id,plik,kolejnosc) VALUES (?,?,?)",
-                (s[0], f"{slug}_{i}.webp", i - 1))
+                "INSERT INTO photos(species_id,plik,autor,licencja,zrodlo_url,"
+                "kolejnosc) VALUES (?,?,?,?,?,?)",
+                (sid, plik, autor, lic, url, k))
 
     cur.executemany("INSERT INTO meta(klucz,wartosc) VALUES (?,?)", [
-        ("db_version", "3"),
+        ("db_version", "4"),
         ("photos_version", "0"),
         ("photos_manifest_url", MANIFEST_URL),
     ])
@@ -295,6 +308,10 @@ def main():
         "SELECT COUNT(*) FROM species WHERE jadalnosc='smiertelny'").fetchone()[0]
     nk = cur.execute(
         "SELECT COUNT(*) FROM species WHERE kuchnia IS NOT NULL").fetchone()[0]
+    nf = cur.execute("SELECT COUNT(*) FROM photos").fetchone()[0]
+    bez = cur.execute(
+        "SELECT COUNT(*) FROM species s WHERE NOT EXISTS("
+        "SELECT 1 FROM photos WHERE species_id=s.id)").fetchone()[0]
     con.execute("VACUUM")
     con.close()
 
@@ -302,6 +319,7 @@ def main():
     print(f"    {n} gatunkow ({smiert} smiertelnie trujacych)")
     print(f"    {nl} powiazan sobowtorow")
     print(f"    {nk} opisow kulinarnych")
+    print(f"    {nf} zdjec ({bez} gatunkow bez zdjec)")
     print(f"    {os.path.getsize(OUT)/1024:.0f} KB")
 
 

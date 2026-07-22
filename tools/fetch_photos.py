@@ -30,18 +30,71 @@ except ImportError:
     sys.exit(1)
 
 API = "https://commons.wikimedia.org/w/api.php"
-UA = "AtlasGrzybow/1.0 (educational mushroom atlas; contact: example@example.com)"
+
+# Wikimedia odrzuca (403) zapytania bez sensownego User-Agenta.
+# Podmien adres na swoj - to wymog regulaminu Wikimedia, nie kosmetyka.
+KONTAKT = os.environ.get("WIKI_KONTAKT", "atlas-grzybow@example.org")
+UA = f"AtlasGrzybow/1.1 (edukacyjny atlas grzybow; {KONTAKT})"
+
 NA_GATUNEK = 4
 SZEROKOSC = 1200
 JAKOSC = 82
 
-# Licencje ktore akceptujemy (dopuszczaja redystrybucje).
-OK_LICENCJE = ("cc-by", "cc-by-sa", "cc0", "public domain", "pd-")
+# Licencje dopuszczajace redystrybucje. Porownanie na tekscie
+# znormalizowanym: male litery, myslniki i podkreslenia -> spacje.
+# Commons zwraca np. "CC BY-SA 3.0", "CC0", "Public domain", "PD-old".
+OK_WZORCE = ("cc by", "cc0", "cc zero", "public domain", "pd ",
+             "no restrictions", "attribution")
+
+# Te odrzucamy mimo ze zawieraja "cc by" - wykluczaja komercyjne
+# uzycie albo modyfikacje, wiec nie nadaja sie do redystrybucji w APK.
+ZLE_WZORCE = ("nc", "nd", "noncommercial", "no derivat")
+
+
+# Skany starych atlasow i ryciny - dla atlasu chcemy fotografii,
+# bo rysunek z 1890 r. nie pomaga rozpoznac grzyba w lesie.
+ZLE_TYTULY = ("atlas des champignons", "flora batava", "coloured figures",
+              "bresadola", "illustration", "planche", "drawing", "dessin",
+              "engraving", "lithograph", "plate ", "tab.", "manual of poisonous",
+              "icones", "svampe", "boletus_granulatus_—")
+
+
+def tytul_ok(tytul: str) -> bool:
+    """Odrzuca skany rycin i tablic z dawnych atlasow."""
+    t = tytul.lower()
+    return not any(z in t for z in ZLE_TYTULY)
+
+
+def licencja_ok(nazwa: str) -> bool:
+    """Czy licencja pozwala na rozpowszechnianie w paczce zdjec."""
+    if not nazwa:
+        return False
+    n = nazwa.lower().replace("-", " ").replace("_", " ")
+    n = " ".join(n.split())
+    if any(z in n.split() or z in n for z in ZLE_WZORCE):
+        return False
+    return any(w in n for w in OK_WZORCE)
+
+
+_SESJA = None
+
+
+def sesja():
+    """Jedna sesja HTTP na caly proces - Wikimedia lubi keep-alive."""
+    global _SESJA
+    if _SESJA is None:
+        _SESJA = requests.Session()
+        _SESJA.headers.update({
+            "User-Agent": UA,
+            "Accept": "image/webp,image/jpeg,image/png,*/*",
+            "Referer": "https://commons.wikimedia.org/",
+        })
+    return _SESJA
 
 
 def api(params):
     params = {**params, "format": "json"}
-    r = requests.get(API, params=params, headers={"User-Agent": UA}, timeout=30)
+    r = sesja().get(API, params=params, timeout=30)
     r.raise_for_status()
     return r.json()
 
@@ -98,6 +151,22 @@ def info_pliku(tytul):
     return None
 
 
+def pobierz_z_ponowieniem(url, prob=3):
+    """Wikimedia bywa kapryslna - ponawiamy z narastajaca przerwa."""
+    for i in range(prob):
+        try:
+            r = sesja().get(url, timeout=60)
+            if r.status_code == 200:
+                return r
+            if r.status_code in (403, 429, 503):
+                time.sleep(2 * (i + 1))
+                continue
+            return None
+        except Exception:
+            time.sleep(2 * (i + 1))
+    return None
+
+
 def cmd_fetch(args):
     con = sqlite3.connect(args.db)
     gatunki = con.execute(
@@ -128,15 +197,19 @@ def cmd_fetch(args):
             if zapisane >= NA_GATUNEK:
                 break
             try:
+                if not tytul_ok(tytul):
+                    continue
                 info = info_pliku(tytul)
                 if not info or not info["url"]:
                     continue
-                if not any(x in info["licencja_lc"] for x in OK_LICENCJE):
+                if not licencja_ok(info["licencja"]):
                     print(f"    pomijam licencje: {info['licencja']}")
                     continue
 
-                r = requests.get(info["url"], headers={"User-Agent": UA}, timeout=60)
-                r.raise_for_status()
+                r = pobierz_z_ponowieniem(info["url"])
+                if r is None:
+                    print("    nie udalo sie pobrac (403/timeout)")
+                    continue
 
                 tmp = os.path.join(args.out, f".tmp_{sid}")
                 with open(tmp, "wb") as f:

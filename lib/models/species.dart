@@ -90,6 +90,7 @@ class Species {
   List<String> kolorowKapelusza = [];
   List<String> siedliska = [];
   List<String> zdjecia = [];
+  List<Zdjecie> zdjeciaMeta = [];
 
   Species({
     required this.id,
@@ -148,6 +149,21 @@ class Species {
     const m = ['', 'I', 'II', 'III', 'IV', 'V', 'VI',
                'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     return '${m[miesiacOd!]} – ${m[miesiacDo!]}';
+  }
+}
+
+class Zdjecie {
+  final String plik;
+  final String? autor;
+  final String? licencja;
+  final String? zrodlo;
+  Zdjecie({required this.plik, this.autor, this.licencja, this.zrodlo});
+
+  /// Podpis wymagany przez licencje CC BY / CC BY-SA.
+  String get podpis {
+    final a = (autor == null || autor!.isEmpty) ? 'autor nieznany' : autor!;
+    final l = (licencja == null || licencja!.isEmpty) ? '' : ', $licencja';
+    return '$a$l';
   }
 }
 
