@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/db.dart';
 import '../models/species.dart';
+import 'slowniczek_screen.dart';
 
 class FiltryScreen extends StatefulWidget {
   final Filtry start;
@@ -13,7 +14,7 @@ class FiltryScreen extends StatefulWidget {
 class _FiltryScreenState extends State<FiltryScreen> {
   late Filtry _f;
   int _trafienia = 0;
-  List<({String nazwa, String? hex})> _kolory = [];
+  List<({String nazwa, String etykieta, String? hex})> _kolory = [];
   List<String> _siedliska = [];
 
   static const _miesiace = [
@@ -51,8 +52,6 @@ class _FiltryScreenState extends State<FiltryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filtry'),
@@ -66,6 +65,7 @@ class _FiltryScreenState extends State<FiltryScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
         children: [
+          _pomoc(context),
           _sekcja(
             'Spód kapelusza',
             'Najważniejsza cecha — decyduje o całej grupie grzybów.',
@@ -95,7 +95,7 @@ class _FiltryScreenState extends State<FiltryScreen> {
                     radius: 8,
                     backgroundColor: _hex(k.hex),
                   ),
-                  label: Text(_ladnie(k.nazwa)),
+                  label: Text(k.etykieta),
                   selected: wybrany,
                   onSelected: (v) => _zmien(() => v
                       ? _f.koloryKapelusza.add(k.nazwa)
@@ -195,6 +195,46 @@ class _FiltryScreenState extends State<FiltryScreen> {
     );
   }
 
+  Widget _pomoc(BuildContext context) {
+    final t = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Material(
+        color: t.colorScheme.primary.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SlowniczekScreen()),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Row(
+              children: [
+                Icon(Icons.menu_book_outlined,
+                    size: 19, color: t.colorScheme.primary),
+                const SizedBox(width: 11),
+                Expanded(
+                  child: Text(
+                    'Nie wiesz, co to pochwa albo hymenofor? Zobacz słowniczek '
+                    'z rysunkami.',
+                    style: t.textTheme.bodySmall?.copyWith(
+                        color: t.colorScheme.primary,
+                        height: 1.35,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Icon(Icons.chevron_right,
+                    size: 19, color: t.colorScheme.primary),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _sekcja(String tytul, String? podtytul, Widget child) {
     final t = Theme.of(context);
     return Padding(
@@ -252,9 +292,6 @@ class _FiltryScreenState extends State<FiltryScreen> {
     if (h == null || !h.startsWith('#')) return Colors.grey;
     return Color(int.parse('FF${h.substring(1)}', radix: 16));
   }
-
-  String _ladnie(String s) =>
-      s[0].toUpperCase() + s.substring(1).replaceAll('_', ' ');
 
   String _odmiana(int n) {
     if (n == 1) return 'gatunek';

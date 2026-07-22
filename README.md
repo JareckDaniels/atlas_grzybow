@@ -2,10 +2,13 @@
 
 Offline'owy atlas grzybów Polski. Baza w APK, zdjęcia pobierane przy pierwszym uruchomieniu.
 
-## Stan: faza 1 — szkielet z 10 gatunkami
+## Stan
 
-Działa: filtry, klucz oznaczania, karty gatunków, sobowtóry, pobieranie zdjęć.
-Brak: treści (10 z ~120 gatunków), zdjęć (trzeba zbudować paczkę).
+50 gatunków, 42 powiązania sobowtórów, 6 gatunków śmiertelnie trujących,
+31 opisów zastosowania kulinarnego.
+Działa: filtry, klucz oznaczania, słowniczek z rysunkami, karty gatunków,
+sobowtóry, pobieranie zdjęć, własna ikona.
+Brak: opublikowanej paczki zdjęć (aplikacja działa z placeholderami).
 
 ## Build — wyłącznie GitHub Actions
 
@@ -16,9 +19,12 @@ Nie potrzebujesz Fluttera lokalnie. Workflow sam generuje rusztowanie Androida.
 3. Zakładka **Actions** → build startuje automatycznie po pushu na `main`.
 4. Po ~5–8 min: Actions → ostatni run → sekcja **Artifacts** → `atlas-grzybow-apk`.
 
-W paczce są cztery pliki. Na telefon bierzesz `app-arm64-v8a-release.apk`
-(każdy telefon z ostatnich lat). Jak nie zadziała — `app-release.apk`,
-uniwersalny, cięższy, ale zawsze się instaluje.
+W paczce jest jeden plik: `atlas-grzybow-1.0.0-arm64.apk`. Budowany tylko
+pod arm64-v8a, bo wszystkie telefony od ok. 2017 roku (w tym cała seria
+Galaxy S) są 64-bitowe. Daje to mniejszy APK i krótszy build.
+
+Gdybyś kiedyś potrzebował wersji na starsze 32-bitowe urządzenie, zmień
+w workflow `--target-platform android-arm64` na `--split-per-abi`.
 
 Tag `v1.0.0` dodatkowo tworzy Release z APK-ami.
 
@@ -38,19 +44,51 @@ i zacommituj wynik. Wtedy workflow można uprościć.
 
 ```
 lib/
-  models/species.dart      modele + stan filtrów
-  data/db.dart             SQLite, dynamiczne budowanie SQL z filtrów
-  data/photo_manager.dart  pobieranie/rozpakowywanie paczki zdjęć
-  screens/                 setup, lista, filtry, klucz, detal
-  widgets/common.dart      karty, badge, zdjęcia
+  models/species.dart        modele + stan filtrów
+  data/db.dart               SQLite, dynamiczne budowanie SQL z filtrów
+  data/photo_manager.dart    pobieranie/rozpakowywanie paczki zdjęć
+  screens/
+    setup_screen.dart        disclaimer + pierwsze pobranie zdjęć
+    lista_screen.dart        lista z wyszukiwarką
+    filtry_screen.dart       filtry z licznikiem na żywo
+    klucz_screen.dart        klucz krok po kroku
+    detal_screen.dart        karta gatunku + sobowtóry
+    slowniczek_screen.dart   objaśnienia pojęć z rysunkami
+    zdjecia_screen.dart      zarządzanie paczką zdjęć
+  widgets/
+    common.dart              karty, badge, zdjęcia
+    morfologia.dart          rysunki morfologii (CustomPainter, bez plików)
 tools/
-  build_db.py              generator bazy (źródło prawdy dla treści)
-  fetch_photos.py          pobieranie z Commons + weryfikacja + pakowanie
+  gatunki.py                 DANE — tu dopisujesz gatunki i opisy kulinarne
+  build_db.py                generator bazy + walidacja danych
+  make_icon.py               generator ikony aplikacji (uruchamiany w CI)
+  fetch_photos.py            pobieranie z Commons + weryfikacja + pakowanie
+photos/
+  manifest.json              wskazuje aplikacji, skąd pobrać paczkę zdjęć
 ```
 
 Baza jest generowana skryptem, nie edytowana ręcznie. Cała treść siedzi
-w `tools/build_db.py` — dodanie gatunku to dopisanie krotki do `SPECIES`
+w `tools/gatunki.py` — dodanie gatunku to dopisanie krotki do `SPECIES`
 plus wpisy w `KOLORY_SP`, `SIEDL_SP`, ewentualnie `LOOKALIKES`.
+
+`build_db.py` waliduje dane przed zapisem i przerywa build przy niespójności
+(nieznany kolor, brak wpisu w KOLORY_SP, złe id w LOOKALIKES, zła jadalność).
+Ta walidacja jest częścią CI — błąd w danych zatrzyma budowanie APK.
+
+Osobna reguła dotyczy opisów kulinarnych (`KUCHNIA`): każdy gatunek jadalny
+lub warunkowo jadalny musi mieć wpis, żaden trujący nie może go mieć,
+a przy gatunkach **warunkowo jadalnych** opis musi wspominać o obróbce
+termicznej. Bez tego rubryka „W kuchni" zachęcałaby do zjedzenia na surowo
+grzyba, który surowy jest trujący.
+
+## Ikona
+
+`tools/make_icon.py` rysuje ikonę (borowik na zielonym tle) w Pillow
+i zapisuje wszystkie gęstości plus wariant adaptacyjny dla Androida 8+.
+Uruchamiana automatycznie w CI po `flutter create`. Podgląd: `icon_preview.png`.
+
+Zmiana wyglądu: edytuj `rysuj_grzyb()` — rysunek jest w układzie 100×100
+skalowanym do docelowego rozmiaru.
 
 ## Model danych
 
@@ -94,13 +132,19 @@ i zapisuje autora oraz źródło do `photos.sql`, który trzeba wkleić do `buil
 **Weryfikacja jest obowiązkowa.** Commons zawiera błędnie oznaczone zdjęcia —
 przy atlasie grzybów to nie jest kosmetyczny problem.
 
-## Do zrobienia w fazie 2/3
+## Rysunki morfologii
+
+`lib/widgets/morfologia.dart` rysuje schematy kodem przez `CustomPainter`
+w układzie 100×100, skalowanym do dostępnego miejsca. Zero plików graficznych,
+idealna ostrość na każdym ekranie. Dodanie nowego pojęcia: nowa klasa
+dziedzicząca po `_Baza` plus wpis w `_pojecia` w `slowniczek_screen.dart`.
+
+## Do zrobienia
 
 - [ ] Uzupełnić `SPECIES` do ~120 gatunków
 - [ ] Zbudować i zweryfikować paczkę zdjęć
-- [ ] Ulubione (tabela lokalna, poza `atlas.db` — przetrwa aktualizację bazy)
+- [ ] Ulubione (osobna tabela, poza `atlas.db` — przetrwa aktualizację bazy)
 - [ ] Tryb ciemny przełączalny
-- [ ] Ikona aplikacji
 - [ ] Rozszerzyć klucz o pytania dla grzybów bez blaszek i rurek
 
 ## Uwaga

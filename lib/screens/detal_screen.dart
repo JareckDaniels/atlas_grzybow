@@ -165,6 +165,37 @@ class _DetalScreenState extends State<DetalScreen> {
                     ),
                   ),
                 ],
+                if (s.kuchnia != null) ...[
+                  const SizedBox(height: 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF8D6E00).withValues(alpha: 0.07),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                          color:
+                              const Color(0xFF8D6E00).withValues(alpha: 0.22)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(children: [
+                          const Icon(Icons.restaurant,
+                              size: 17, color: Color(0xFF8D6E00)),
+                          const SizedBox(width: 7),
+                          Text('W kuchni',
+                              style: t.textTheme.labelLarge?.copyWith(
+                                  color: const Color(0xFF8D6E00),
+                                  fontWeight: FontWeight.w700)),
+                        ]),
+                        const SizedBox(height: 7),
+                        Text(s.kuchnia!,
+                            style: const TextStyle(height: 1.45, fontSize: 14)),
+                      ],
+                    ),
+                  ),
+                ],
                 if (s.opis != null) ...[
                   const SizedBox(height: 20),
                   Text('Opis', style: _naglowek(t)),

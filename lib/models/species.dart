@@ -84,6 +84,7 @@ class Species {
   final String? opis;
   final String? cechyKluczowe;
   final String? uwagi;
+  final String? kuchnia;
   final bool chroniony;
 
   List<String> kolorowKapelusza = [];
@@ -112,6 +113,7 @@ class Species {
     this.opis,
     this.cechyKluczowe,
     this.uwagi,
+    this.kuchnia,
     required this.chroniony,
   });
 
@@ -137,6 +139,7 @@ class Species {
         opis: m['opis'] as String?,
         cechyKluczowe: m['cechy_kluczowe'] as String?,
         uwagi: m['uwagi'] as String?,
+        kuchnia: m['kuchnia'] as String?,
         chroniony: (m['chroniony'] as int? ?? 0) == 1,
       );
 

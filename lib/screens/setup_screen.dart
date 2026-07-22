@@ -141,6 +141,25 @@ class _SetupScreenState extends State<SetupScreen> {
   Widget _pobieranie(BuildContext context) {
     final t = Theme.of(context);
     final blad = _postep.stan == StanPobierania.blad;
+    final brakPaczki = _postep.stan == StanPobierania.brak;
+
+    final (ikona, kolor, naglowek) = switch (_postep.stan) {
+      StanPobierania.blad => (
+          Icons.cloud_off,
+          t.colorScheme.error,
+          'Nie udało się pobrać'
+        ),
+      StanPobierania.brak => (
+          Icons.photo_library_outlined,
+          t.colorScheme.onSurfaceVariant,
+          'Zdjęcia w przygotowaniu'
+        ),
+      _ => (
+          Icons.cloud_download_outlined,
+          t.colorScheme.primary,
+          'Pobieranie zdjęć'
+        ),
+    };
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -148,18 +167,16 @@ class _SetupScreenState extends State<SetupScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(blad ? Icons.cloud_off : Icons.cloud_download_outlined,
-              size: 48,
-              color: blad ? t.colorScheme.error : t.colorScheme.primary),
+          Icon(ikona, size: 48, color: kolor),
           const SizedBox(height: 20),
-          Text(blad ? 'Nie udało się pobrać' : 'Pobieranie zdjęć',
+          Text(naglowek,
               style: t.textTheme.headlineSmall
                   ?.copyWith(fontWeight: FontWeight.w700)),
           const SizedBox(height: 10),
           Text(
             _postep.komunikat ??
                 'Zdjęcia pobierane są jednorazowo i działają później bez internetu. '
-                    'Paczka waży ok. 50 MB — zalecane WiFi.',
+                    'Zalecane połączenie WiFi.',
             style: t.textTheme.bodyMedium
                 ?.copyWith(color: t.colorScheme.onSurfaceVariant, height: 1.5),
           ),
@@ -174,7 +191,7 @@ class _SetupScreenState extends State<SetupScreen> {
             ),
             const SizedBox(height: 24),
           ],
-          if (!_pobieranieTrwa)
+          if (!_pobieranieTrwa && !brakPaczki)
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
@@ -188,8 +205,21 @@ class _SetupScreenState extends State<SetupScreen> {
                 ),
               ),
             ),
+          if (!_pobieranieTrwa && brakPaczki)
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: _wejdz,
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text('Przejdź do atlasu'),
+              ),
+            ),
           const SizedBox(height: 10),
-          if (!_pobieranieTrwa)
+          if (!_pobieranieTrwa && !brakPaczki)
             SizedBox(
               width: double.infinity,
               child: TextButton(

@@ -3,6 +3,7 @@ import '../data/db.dart';
 import '../models/species.dart';
 import '../widgets/common.dart';
 import 'detal_screen.dart';
+import 'slowniczek_screen.dart';
 
 class _Pytanie {
   final String tekst;
@@ -160,6 +161,14 @@ class _KluczScreenState extends State<KluczScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
+          IconButton(
+            tooltip: 'Słowniczek pojęć',
+            icon: const Icon(Icons.menu_book_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SlowniczekScreen()),
+            ),
+          ),
           if (_historia.isNotEmpty)
             IconButton(
               tooltip: 'Cofnij',

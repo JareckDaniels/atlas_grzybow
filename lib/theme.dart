@@ -46,7 +46,18 @@ class AtlasTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        labelStyle: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500),
+        // Kolor MUSI byc jawny - bez niego M3 bierze domyslny z ThemeData
+        // i etykieta robi sie niewidoczna na bialym tle.
+        labelStyle: TextStyle(
+          fontSize: 13.5,
+          fontWeight: FontWeight.w500,
+          color: scheme.onSurface,
+        ),
+        secondaryLabelStyle: TextStyle(
+          fontSize: 13.5,
+          fontWeight: FontWeight.w600,
+          color: scheme.onSurface,
+        ),
         backgroundColor: Colors.white,
         selectedColor: _mech.withValues(alpha: 0.16),
       ),
@@ -89,6 +100,11 @@ class AtlasTheme {
         showCheckmark: false,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: TextStyle(
+          fontSize: 13.5,
+          fontWeight: FontWeight.w500,
+          color: scheme.onSurface,
         ),
       ),
     );

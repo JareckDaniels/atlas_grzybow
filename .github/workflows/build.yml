@@ -51,6 +51,9 @@ jobs:
           cp -r /tmp/keep/lib lib
           cp /tmp/keep/pubspec.yaml pubspec.yaml
           cp /tmp/keep/analysis_options.yaml . 2>/dev/null || true
+          # flutter create generuje test/widget_test.dart odwolujacy sie
+          # do klasy MyApp, ktorej u nas nie ma. Nie wchodzi do APK.
+          rm -rf test
 
       - name: Podnies minSdk (wymagane przez sqflite)
         run: |
@@ -73,6 +76,16 @@ jobs:
           echo "--- manifest ---"
           cat $MANIFEST
 
+      - name: Generuj ikone aplikacji
+        run: |
+          pip install --quiet pillow
+          python3 tools/make_icon.py android/app/src/main/res
+          # flutter create tworzy domyslne launcher_icon w mipmap-* -
+          # nasze pliki je nadpisaly, ale usuwamy tez ewentualne XML-e
+          # z drawable, ktore moglyby przeslonic ikone adaptacyjna.
+          rm -f android/app/src/main/res/drawable*/ic_launcher*.xml || true
+          ls -R android/app/src/main/res/mipmap-xxxhdpi/
+
       - name: Generuj baze SQLite
         run: |
           mkdir -p assets/db
@@ -84,22 +97,22 @@ jobs:
 
       - name: Analiza statyczna
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
-        continue-on-error: true
 
-      - name: Build APK (uniwersalny)
-        run: flutter build apk --release
+      - name: Build APK (tylko arm64-v8a)
+        run: flutter build apk --release --target-platform android-arm64
 
-      - name: Build APK (per ABI)
-        run: flutter build apk --release --split-per-abi
-
-      - name: Lista artefaktow
-        run: ls -lah build/app/outputs/flutter-apk/
+      - name: Zmien nazwe na czytelna
+        run: |
+          cd build/app/outputs/flutter-apk
+          WERSJA=$(grep '^version:' ../../../../pubspec.yaml | sed 's/version: //' | cut -d'+' -f1)
+          mv app-release.apk "atlas-grzybow-${WERSJA}-arm64.apk"
+          ls -lah
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: atlas-grzybow-apk
-          path: build/app/outputs/flutter-apk/*.apk
+          path: build/app/outputs/flutter-apk/atlas-grzybow-*.apk
           retention-days: 60
           if-no-files-found: error
 
@@ -107,5 +120,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: build/app/outputs/flutter-apk/*.apk
+          files: build/app/outputs/flutter-apk/atlas-grzybow-*.apk
           generate_release_notes: true

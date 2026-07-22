@@ -46,7 +46,7 @@ class AtlasDb {
     return openDatabase(path, readOnly: false);
   }
 
-  static const _wersjaWbudowana = 1;
+  static const _wersjaWbudowana = 3;
 
   Future<String?> meta(String klucz) async {
     final d = await db;
@@ -63,15 +63,19 @@ class AtlasDb {
 
   // ---------- slowniki ----------
 
-  Future<List<({String nazwa, String? hex})>> kolory() async {
+  Future<List<({String nazwa, String etykieta, String? hex})>> kolory() async {
     final d = await db;
     final r = await d.rawQuery('''
-      SELECT DISTINCT k.nazwa, k.hex FROM kolory k
+      SELECT DISTINCT k.nazwa, k.etykieta, k.hex FROM kolory k
       JOIN species_kolor sk ON sk.kolor_id = k.id
       WHERE sk.czesc = 'kapelusz' ORDER BY k.id
     ''');
     return r
-        .map((m) => (nazwa: m['nazwa'] as String, hex: m['hex'] as String?))
+        .map((m) => (
+              nazwa: m['nazwa'] as String,
+              etykieta: m['etykieta'] as String,
+              hex: m['hex'] as String?,
+            ))
         .toList();
   }
 
@@ -181,12 +185,13 @@ class AtlasDb {
     final byId = {for (final s in lista) s.id: s};
 
     final kol = await d.rawQuery('''
-      SELECT sk.species_id, k.nazwa FROM species_kolor sk
+      SELECT sk.species_id, k.etykieta FROM species_kolor sk
       JOIN kolory k ON k.id = sk.kolor_id
       WHERE sk.czesc = 'kapelusz' AND sk.species_id IN ($ids)
+      ORDER BY k.id
     ''');
     for (final m in kol) {
-      byId[m['species_id'] as int]?.kolorowKapelusza.add(m['nazwa'] as String);
+      byId[m['species_id'] as int]?.kolorowKapelusza.add(m['etykieta'] as String);
     }
 
     final sie = await d.rawQuery('''

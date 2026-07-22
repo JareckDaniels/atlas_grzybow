@@ -29,3 +29,7 @@ key.properties
 photos_raw/
 *.zip
 manifest_local.json
+
+# Python
+__pycache__/
+*.pyc

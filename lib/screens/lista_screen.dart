@@ -6,6 +6,8 @@ import '../widgets/common.dart';
 import 'detal_screen.dart';
 import 'filtry_screen.dart';
 import 'klucz_screen.dart';
+import 'slowniczek_screen.dart';
+import 'zdjecia_screen.dart';
 
 class ListaScreen extends StatefulWidget {
   const ListaScreen({super.key});
@@ -95,9 +97,38 @@ class _ListaScreenState extends State<ListaScreen> {
         title: const Text('Atlas grzybów'),
         actions: [
           IconButton(
+            tooltip: 'Słowniczek pojęć',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SlowniczekScreen()),
+            ),
+            icon: const Icon(Icons.menu_book_outlined),
+          ),
+          IconButton(
             tooltip: 'Klucz oznaczania',
             onPressed: _otworzKlucz,
             icon: const Icon(Icons.account_tree_outlined),
+          ),
+          PopupMenuButton<String>(
+            tooltip: 'Więcej',
+            onSelected: (v) {
+              if (v == 'zdjecia') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ZdjeciaScreen()),
+                );
+              }
+            },
+            itemBuilder: (_) => const [
+              PopupMenuItem(
+                value: 'zdjecia',
+                child: Row(children: [
+                  Icon(Icons.photo_library_outlined, size: 19),
+                  SizedBox(width: 10),
+                  Text('Zdjęcia'),
+                ]),
+              ),
+            ],
           ),
         ],
       ),

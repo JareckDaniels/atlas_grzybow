@@ -74,9 +74,12 @@ class PhotoManager {
     final url = manifest['url'] as String?;
     final wersja = (manifest['version'] as num?)?.toInt() ?? 0;
     final rozmiar = (manifest['size'] as num?)?.toInt() ?? 0;
-    if (url == null) {
-      yield const PostepPobierania(StanPobierania.blad,
-          komunikat: 'Nieprawidłowy manifest.');
+
+    // Manifest istnieje, ale paczka nie zostala jeszcze opublikowana.
+    if (wersja == 0 || url == null || url.isEmpty) {
+      yield const PostepPobierania(StanPobierania.brak,
+          komunikat: 'Paczka zdjęć nie została jeszcze opublikowana. '
+              'Atlas działa bez zdjęć — opisy, filtry i klucz są kompletne.');
       return;
     }
 
