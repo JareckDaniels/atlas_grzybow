@@ -4,8 +4,14 @@ Offline'owy atlas grzybów Polski. Baza w APK, zdjęcia pobierane przy pierwszym
 
 ## Stan
 
-50 gatunków, 42 powiązania sobowtórów, 6 gatunków śmiertelnie trujących,
-31 opisów zastosowania kulinarnego.
+51 gatunków, 54 powiązania sobowtórów (26 oznaczonych jako potencjalnie
+śmiertelne), 7 gatunków śmiertelnie trujących, 32 opisy zastosowania
+kulinarnego.
+
+**38 z 51 gatunków zweryfikowane** z dwoma źródłami: atlasem Marka Snowarskiego
+(grzyby.pl) i przewodnikiem Markusa Flücka „Jaki to grzyb?". Szczegóły, lista
+poprawek i wykaz tego, co pozostaje niezweryfikowane:
+[`docs/WERYFIKACJA.md`](docs/WERYFIKACJA.md).
 Działa: filtry, klucz oznaczania, słowniczek z rysunkami, karty gatunków,
 sobowtóry, pobieranie zdjęć, własna ikona.
 Brak: opublikowanej paczki zdjęć (aplikacja działa z placeholderami).
@@ -62,6 +68,7 @@ tools/
   gatunki.py                 DANE — tu dopisujesz gatunki i opisy kulinarne
   build_db.py                generator bazy + walidacja danych
   make_icon.py               generator ikony aplikacji (uruchamiany w CI)
+  parse_atlas.py             czytnik atlasu grzyby.pl do weryfikacji danych
   fetch_photos.py            pobieranie z Commons + weryfikacja + pakowanie
 photos/
   manifest.json              wskazuje aplikacji, skąd pobrać paczkę zdjęć

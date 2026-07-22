@@ -43,7 +43,7 @@ SPECIES = [
 
     (3, "Borowik ceglastopory", "Neoboletus luridiformis", "krasnoborowik ceglastopory",
      "Boletaceae", "warunkowo", "rurki", 0, 0, 0, 1,
-     "poduszkowaty", "aksamitna", "oliwkowobrązowy", "przyjemny", "łagodny", 6, 10,
+     "poduszkowaty", "aksamitna", "oliwkowobrązowy", "przyjemny", "łagodny", 5, 11,
      "Masywny borowik o ciemnobrązowym, aksamitnym kapeluszu i pomarańczowo"
      "czerwonych porach. Trzon żółty, gęsto pokryty czerwonymi kropkami. "
      "Miąższ intensywnie i natychmiast sinieje po przekrojeniu — reakcja jest "
@@ -116,13 +116,17 @@ SPECIES = [
      "dolegliwości trawienne.", 0),
 
     (10, "Maślak sitarz", "Suillus bovinus", "sitarz",
-     "Suillaceae", "jadalny", "rurki", 0, 0, 0, 0,
-     "plaski", "gladka", "oliwkowobrązowy", "słaby", "łagodny", 7, 11,
-     "Kapelusz 4–10 cm, żółtobrązowy do cielistego, lekko lepki, o falistym "
-     "brzegu. Pory duże, nieregularne, kanciaste, oliwkowożółte — wyraźnie "
-     "szersze niż u maślaka zwyczajnego. Brak pierścienia na trzonie.",
-     "Duże, kanciaste pory; brak pierścienia; falisty brzeg kapelusza",
-     "Grzyb średniej jakości, często robaczywy.", 0),
+     "Suillaceae", "jadalny", "rurki", 0, 0, 0, 1,
+     "plaski", "sluzowata", "oliwkowobrązowy", "słaby", "łagodny", 7, 11,
+     "Kapelusz 3–12 cm, płowy, pomarańczowobrązowy do bladocielistego, "
+     "lepki i błyszczący po wyschnięciu; brzeg początkowo podwinięty, "
+     "u starszych owocników falisto powyginany. Pory duże, nieregularne, "
+     "kanciaste, żółtawe, z wiekiem zielonkawe — wyraźnie szersze niż "
+     "u maślaka zwyczajnego. Trzon krótki, bez pierścienia. Miąższ bardzo "
+     "elastyczny, gumowaty, lekko błękitniejący po przekrojeniu.",
+     "Duże, kanciaste pory; brak pierścienia; gumowaty, elastyczny miąższ",
+     "Grzyb średniej jakości — gumowaty miąższ zniechęca, często też "
+     "bywa robaczywy.", 0),
 
     (11, "Maślak ziarnisty", "Suillus granulatus", "maślak bez pierścienia",
      "Suillaceae", "jadalny", "rurki", 0, 0, 0, 0,
@@ -137,7 +141,7 @@ SPECIES = [
     (12, "Muchomor sromotnikowy", "Amanita phalloides", "zielona śmierć",
      "Amanitaceae", "smiertelny", "blaszki", 1, 1, 0, 0,
      "dzwonkowaty do płaskiego", "gladka", "biały",
-     "mdły, z wiekiem nieprzyjemny", "łagodny", 7, 11,
+     "mdły, z wiekiem nieprzyjemny", "łagodny", 7, 10,
      "Najbardziej trujący grzyb Europy, odpowiadający za większość śmiertelnych "
      "zatruć. Kapelusz 5–15 cm, oliwkowozielony do żółtawozielonego, z wrośniętymi "
      "promienistymi włóknami. Blaszki zawsze białe, wolne. Trzon z błoniastym "
@@ -209,15 +213,18 @@ SPECIES = [
     # ---------------- PIECZARKI I CZUBAJKI ----------------
     (18, "Pieczarka polna", "Agaricus campestris", "pieczarka łąkowa",
      "Agaricaceae", "jadalny", "blaszki", 1, 0, 0, 0,
-     "polkulisty do płaskiego", "gladka", "ciemnobrązowy",
-     "przyjemny, pieczarkowy", "łagodny", 6, 10,
+     "polkulisty do płaskiego", "gladka", "purpurowobrązowy",
+     "przyjemny, pieczarkowy", "łagodny", 5, 10,
      "Popularny grzyb łąk i pastwisk, blisko spokrewniony z pieczarką hodowlaną. "
      "Kapelusz 4–10 cm, biały do kremowego. Blaszki — cecha rozstrzygająca — "
      "są u młodych owocników różowe, a z wiekiem ciemnieją do "
      "czekoladowobrązowych. Trzon z delikatnym, często zanikającym pierścieniem, "
      "bez pochwy.",
      "Różowe, potem brązowe blaszki; brak pochwy; rośnie na otwartych terenach",
-     "Różowe blaszki to najważniejsza różnica wobec białych muchomorów.", 0),
+     "Różowe blaszki to najważniejsza różnica wobec białych muchomorów. "
+     "Owocniki pojawiają się dwiema falami: w maju i czerwcu, a potem "
+     "od sierpnia do października. Gatunek kumuluje ołów — nie zbierać "
+     "z łąk nawożonych osadami ściekowymi ani z poboczy ruchliwych dróg.", 0),
 
     (19, "Pieczarka leśna", "Agaricus silvaticus", "pieczarka czerwieniejąca",
      "Agaricaceae", "jadalny", "blaszki", 1, 0, 0, 0,
@@ -294,9 +301,11 @@ SPECIES = [
      "Blaszki siarkowożółte, gęste. Rośnie w borach sosnowych na piaszczystej "
      "glebie, często zagrzebana w piasku.",
      "Żółtozielony kapelusz; siarkowożółte blaszki; bory sosnowe na piasku",
-     "Dawniej ceniony jako jadalny. Po serii zatruć ze skutkiem śmiertelnym "
-     "(rabdomioliza po spożyciu dużych ilości) uznany za niejadalny. "
-     "Nie zaleca się zbierania.", 0),
+     "UWAGA: starsze atlasy i przewodniki (w tym wydania sprzed 2001 r.) "
+     "opisują zielonkę jako smaczny grzyb jadalny. Po serii zatruć ze skutkiem "
+     "śmiertelnym — rabdomioliza, czyli rozpad mięśni po spożyciu większych "
+     "ilości — została w Polsce wykreślona z listy grzybów dopuszczonych "
+     "do obrotu. Nie zaleca się zbierania.", 0),
 
     (26, "Gąska szara", "Tricholoma portentosum", "podzielona",
      "Tricholomataceae", "jadalny", "blaszki", 0, 0, 0, 0,
@@ -365,11 +374,12 @@ SPECIES = [
      "wklesly, lejkowaty", "gladka", "kremowy", "przyjemny, owocowy",
      "łagodny", 8, 11,
      "Grzyb borów sosnowych, rozpoznawalny po intensywnie pomarańczowej barwie "
-     "i po marchwiowopomarańczowym mleczku, które wypływa po przecięciu miąższu. "
-     "Kapelusz 4–12 cm, z koncentrycznymi ciemniejszymi strefami, brzeg "
-     "podwinięty. Blaszki zbiegające, pomarańczowe. Uszkodzone miejsca "
-     "z czasem zielenieją.",
-     "Pomarańczowe mleczko po przecięciu; zielenienie uszkodzonych miejsc; pod sosnami",
+     "i po marchwiowoczerwonym mleczku, które wypływa po przecięciu miąższu "
+     "i z czasem szarozielenieje. Kapelusz 4–12 cm, z koncentrycznymi "
+     "ciemniejszymi strefami, brzeg długo podwinięty. Blaszki bladopomarańczowe, "
+     "krótko zbiegające. Trzon krótki, szybko pusty, pokryty wyraźnymi "
+     "pomarańczowymi, płytkimi jamkami — to dobra cecha rozpoznawcza.",
+     "Marchwiowe mleczko; pomarańczowe jamki na trzonie; zielenienie uszkodzeń",
      "Zielone plamy na owocniku są naturalne i nie dyskwalifikują grzyba.", 0),
 
     (33, "Mleczaj świerkowy", "Lactarius deterrimus", "rydz świerkowy",
@@ -402,38 +412,44 @@ SPECIES = [
      "nie ma pierścienia ani pochwy.", 0),
 
     (36, "Gołąbek wymiotny", "Russula emetica", "gołąbek jadowity",
-     "Russulaceae", "niejadalny", "blaszki", 0, 0, 0, 0,
+     "Russulaceae", "trujacy", "blaszki", 0, 0, 0, 0,
      "wypukly", "gladka", "biały", "owocowy", "skrajnie ostry, piekący", 7, 10,
      "Kapelusz 3–10 cm, jaskrawoczerwony, o skórce łatwo dającej się ściągnąć. "
      "Blaszki i trzon czysto białe. Smak natychmiast piekący. Rośnie "
      "na wilgotnych, kwaśnych glebach, często wśród mchów.",
      "Jaskrawoczerwony kapelusz; białe blaszki; skrajnie piekący smak",
-     "Wywołuje wymioty i biegunkę. U gołąbków obowiązuje zasada: "
-     "ostry smak = nie zbieramy.", 0),
+     "TRUJĄCY — wywołuje wymioty i biegunkę. U gołąbków obowiązuje prosta "
+     "zasada: ostry, piekący smak oznacza, że grzyba nie zbieramy.", 0),
 
     # ---------------- SMARDZE, PIESTRZENICE ----------------
     (37, "Smardz jadalny", "Morchella esculenta", "smardz",
      "Morchellaceae", "warunkowo", "gladki", 0, 0, 0, 0,
      "jajowaty", "komorkowa", "kremowy", "przyjemny", "łagodny", 4, 5,
      "Wiosenny grzyb workowy o charakterystycznym, gąbczastym kapeluszu "
-     "pokrytym nieregularnymi komorami. Kapelusz 4–10 cm, żółtobrązowy, "
-     "zrośnięty z trzonem na całym obwodzie. Wnętrze całkowicie puste — "
-     "to cecha odróżniająca od trujących piestrzenic.",
-     "Kapelusz z komorami; wnętrze całkowicie puste; wiosna",
+     "pokrytym regularnymi, wyraźnie odgraniczonymi komorami. Kapelusz "
+     "4–10 cm, żółtobrązowy, zrośnięty z trzonem na całym obwodzie. "
+     "Po przekrojeniu wzdłuż wnętrze jest jedną, całkowicie pustą komorą — "
+     "to cecha odróżniająca od śmiertelnie trujących piestrzenic, "
+     "których miąższ wypełniają nieregularne pofałdowania.",
+     "Regularne komory na kapeluszu; wnętrze jedną pustą komorą; wiosna",
      "WARUNKOWO JADALNY — konieczne dokładne ugotowanie. W Polsce smardze "
      "są pod ochroną częściową; sprawdź aktualne przepisy przed zbiorem.", 1),
 
     (38, "Piestrzenica kasztanowata", "Gyromitra esculenta", "babie uszy",
-     "Discinaceae", "trujacy", "gladki", 0, 0, 0, 0,
-     "mozgowaty", "pofaldowana", "kremowy", "przyjemny", "łagodny", 3, 5,
-     "Wiosenny grzyb o kapeluszu przypominającym mózg — nieregularnie "
-     "pofałdowanym, kasztanowobrązowym. W przeciwieństwie do smardza wnętrze "
-     "nie jest puste, lecz wypełnione komorami i pofałdowaniami. Zawiera "
-     "gyromitrynę, związek o działaniu rakotwórczym i hepatotoksycznym.",
-     "Mózgowato pofałdowany kapelusz; wnętrze niepuste; wiosna",
-     "TRUJĄCY. Dawniej spożywany po wielokrotnym gotowaniu, obecnie "
-     "zdecydowanie odradzany — toksyna jest lotna i groźna również przy "
-     "wdychaniu oparów podczas gotowania.", 0),
+     "Discinaceae", "smiertelny", "gladki", 0, 0, 0, 0,
+     "mozgowaty", "pofaldowana", "bialy", "bardzo słaby", "łagodny", 3, 5,
+     "Wiosenny grzyb o główce 3–9 cm, kasztanowobrązowej do czerwonobrązowej, "
+     "kulistej i silnie pofałdowanej — wyglądem przypomina zwoje mózgu. "
+     "Brzeg zrośnięty z trzonem. Trzon białawy do bladoszarego, krótki, "
+     "pomarszczony, o zgrubiałej podstawie. Miąższ woskowaty i kruchy, "
+     "z nieregularnymi pustymi przestrzeniami w całym owocniku — "
+     "w odróżnieniu od smardza, którego wnętrze jest jedną pustą komorą. "
+     "Zawiera gyromitrynę, związek hepatotoksyczny i rakotwórczy.",
+     "Mózgowato pofałdowana główka; miąższ z nieregularnymi komorami; wiosna",
+     "W STANIE SUROWYM ŚMIERTELNIE TRUJĄCA. Dawniej bywała spożywana "
+     "po obgotowaniu lub wysuszeniu, ale nawet tak przygotowana wywoływała "
+     "poważne zatrucia. Toksyna jest lotna i groźna również przy wdychaniu "
+     "oparów podczas gotowania. Nie zbierać.", 0),
 
     # ---------------- KOLCZAKI, ŻAGWIE, INNE ----------------
     (39, "Kolczak obłączasty", "Hydnum repandum", "kolczak żółty",
@@ -448,14 +464,16 @@ SPECIES = [
     (40, "Żagiew siarkowa", "Laetiporus sulphureus", "kurczak z lasu",
      "Fomitopsidaceae", "warunkowo", "rurki", 0, 0, 0, 0,
      "wachlarzowaty", "aksamitna", "biały", "przyjemny, kwaskowaty",
-     "łagodny", 5, 9,
+     "łagodny", 5, 7,
      "Jaskrawopomarańczowożółty grzyb rosnący dachówkowato na pniach drzew "
-     "liściastych, głównie dębów i wierzb. Owocniki tworzą półkoliste, "
-     "wachlarzowate kapelusze do 30 cm. Młode są miękkie i soczyste, "
-     "starsze twardnieją i stają się niejadalne.",
+     "liściastych — robinii, dębów i topoli, często przydrożnych i parkowych. "
+     "Owocniki pojawiają się wiosną i wczesnym latem, głównie w maju i czerwcu. "
+     "Tworzą półkoliste, wachlarzowate kapelusze do 30 cm. Młode są miękkie "
+     "i soczyste, starsze twardnieją i stają się niejadalne.",
      "Jaskrawopomarańczowe wachlarze na pniu; brak trzonu; drobne żółte pory",
-     "WARUNKOWO JADALNY — tylko młode owocniki, po ugotowaniu. Okazy rosnące "
-     "na drzewach iglastych i robinii mogą powodować zatrucia.", 0),
+     "WARUNKOWO JADALNY — tylko młode owocniki, po ugotowaniu; surowy jest "
+     "trujący. Okazy rosnące na drzewach iglastych i na cisie mogą powodować "
+     "zatrucia. Groźny pasożyt drzew.", 0),
 
     (41, "Purchawka chropowata", "Lycoperdon perlatum", "purchawka jeżowata",
      "Agaricaceae", "jadalny", "brak", 0, 0, 0, 0,
@@ -499,27 +517,37 @@ SPECIES = [
      "Uwaga: to jedyny zasłonak powszechnie zbierany. Większość zasłonaków "
      "jest trująca, w tym śmiertelnie — początkującym odradza się cały rodzaj.", 0),
 
-    (45, "Zasłonak rudy", "Cortinarius rubellus", "zasłonak pomarańczowoczerwony",
+    (45, "Zasłonak rudy", "Cortinarius rubellus",
+     "zasłonak szpiczasty, Cortinarius speciosissimus",
      "Cortinariaceae", "smiertelny", "blaszki", 0, 0, 0, 0,
-     "stozkowaty", "wlokienkowa", "rdzawobrązowy", "rzodkiewkowy", "łagodny", 8, 10,
-     "Kapelusz 3–8 cm, rdzawopomarańczowy, stożkowaty z wyraźnym garbkiem, "
-     "włóknisty. Blaszki rdzawe, szeroko rozstawione. Trzon z żółtawymi "
-     "pasmami. Zawiera orellaninę uszkadzającą nerki — objawy pojawiają się "
-     "dopiero po 2–3 tygodniach od spożycia.",
-     "Rdzawopomarańczowy stożkowaty kapelusz z garbkiem; żółtawe pasma na trzonie",
+     "stozkowaty", "luskowata", "rdzawobrązowy", "rzodkiewkowy", "łagodny", 7, 9,
+     "Kapelusz 3–8 cm, pomarańczowoczerwony do rdzawobrązowego, u młodych "
+     "owocników spiczasto-stożkowaty, później słabo wypukły, ale zawsze "
+     "z wyraźnym spiczastym garbkiem. Powierzchnia delikatnie łuskowata, matowa. "
+     "Blaszki czerwonobrązowe, grube i rzadkie. Trzon barwy kapelusza, mocny, "
+     "zwykle z kilkoma pasmami żółtawych resztek osłony. Zawiera orellaninę "
+     "uszkadzającą nerki — objawy pojawiają się dopiero po 2–3 tygodniach.",
+     "Spiczasty garbek na kapeluszu; grube, rzadkie blaszki; żółtawe pasma na trzonie",
      "ŚMIERTELNIE TRUJĄCY. Bardzo długi okres bezobjawowy sprawia, że zatrucie "
-     "bywa rozpoznane zbyt późno. Prowadzi do nieodwracalnej niewydolności nerek.", 0),
+     "bywa rozpoznane zbyt późno. Prowadzi do nieodwracalnej niewydolności nerek. "
+     "Blisko spokrewniony zasłonak rudy (Cortinarius orellanus) zawiera tę samą "
+     "truciznę, ale rośnie w cieplejszych okolicach i jest rzadszy.", 0),
 
     (46, "Hełmówka obrzeżona", "Galerina marginata", "hełmówka jadowita",
      "Hymenogastraceae", "smiertelny", "blaszki", 1, 0, 0, 0,
      "wypukly", "gladka", "rdzawobrązowy", "mączny", "łagodny", 8, 11,
-     "Drobny grzyb 2–5 cm rosnący kępkami na martwym drewnie, często "
-     "w towarzystwie opieniek. Kapelusz miodowobrązowy, higrofaniczny. "
-     "Blaszki rdzawobrązowe. Zawiera te same amatoksyny co muchomor sromotnikowy.",
-     "Drobny, rośnie na drewnie; rdzawe blaszki; pierścień na trzonie",
-     "ŚMIERTELNIE TRUJĄCA. Rośnie w tych samych miejscach co opieńki. "
-     "Kluczowa różnica: rdzawobrązowe blaszki i wysyp zarodników "
-     "(opieńka ma kremowe blaszki i biały wysyp).", 0),
+     "Drobny grzyb o kapeluszu 1,5–4 cm, ochrowym do żółtobrązowego, "
+     "wodochłonnym — przy wilgotnej pogodzie brzeg jest przeświecająco "
+     "prążkowany. Rośnie kępami, głównie na martwym drewnie iglastym. "
+     "Blaszki cynamonowobrązowe, gęste. Trzon pusty, z małym błoniastym "
+     "pierścieniem; pod pierścieniem pokryty białawymi włóknami, ale "
+     "BEZ łuseczek, z wiekiem czerniejący od podstawy. Zawiera te same "
+     "amatoksyny co muchomor sromotnikowy.",
+     "Trzon pod pierścieniem gładki, bez łuseczek; rdzawy wysyp; drewno iglaste",
+     "ŚMIERTELNIE TRUJĄCA. Rośnie w tych samych miejscach co opieńki "
+     "i łuszczak zmienny. Cecha rozstrzygająca: trzon pod pierścieniem jest "
+     "gładki i włóknisty, bez wyraźnych łuseczek, a grzyb rośnie głównie "
+     "na drewnie iglastym. Nie robić próby smakowej.", 0),
 
     (47, "Lejkówka jadowita", "Clitocybe rivulosa", "lejkówka biaława",
      "Tricholomataceae", "smiertelny", "blaszki", 0, 0, 0, 0,
@@ -552,6 +580,21 @@ SPECIES = [
      "TRUJĄCY. Zawsze przekrój okrągłe grzyby — purchawka ma wnętrze "
      "czysto białe, tęgoskór ciemne.", 0),
 
+    (51, "Łuszczak zmienny", "Kuehneromyces mutabilis",
+     "Pholiota mutabilis, opieńka zmienna",
+     "Strophariaceae", "jadalny", "blaszki", 1, 0, 0, 0,
+     "wypukly", "gladka", "rdzawobrązowy", "przyjemny", "łagodny", 4, 12,
+     "Kapelusz 3–6 cm, cynamonowobrązowy do żółtobrązowego, wodochłonny — "
+     "przy dużej wilgotności ma wyraźnie ciemniejszy brzeg i widoczne jasne "
+     "oraz ciemne strefy. Rośnie kępami na obumarłym drewnie liściastym. "
+     "Blaszki cynamonowe, przyrośnięte i nieco zbiegające. Cecha rozstrzygająca: "
+     "trzon pod pierścieniem jest aż do podstawy pokryty wyraźnymi łuseczkami "
+     "i ciemnordzawy, nad pierścieniem gładki i jasny.",
+     "Trzon pod pierścieniem wyraźnie łuseczkowaty; rośnie kępami na drewnie liściastym",
+     "Jadalny, ale zalecany wyłącznie doświadczonym grzybiarzom — rośnie "
+     "w tych samych miejscach co śmiertelnie trująca hełmówka obrzeżona. "
+     "Używa się tylko kapeluszy, trzony są włókniste.", 0),
+
     (50, "Krowiak podwinięty", "Paxillus involutus", "olszówka",
      "Paxillaceae", "smiertelny", "blaszki", 0, 0, 0, 0,
      "wklesly", "aksamitna", "brązowy", "kwaskowaty", "łagodny", 7, 10,
@@ -559,9 +602,11 @@ SPECIES = [
      "zbiegające, dające się oddzielić od kapelusza, po uciśnięciu wyraźnie "
      "brązowieją. Przez dziesięciolecia zbierany jako jadalny po ugotowaniu.",
      "Silnie podwinięty brzeg kapelusza; blaszki brązowieją po dotknięciu",
-     "ŚMIERTELNIE TRUJĄCY. Wywołuje reakcję autoimmunologiczną prowadzącą "
-     "do rozpadu krwinek czerwonych. Zatrucie może wystąpić nagle po latach "
-     "bezobjawowego spożywania. Nie zbierać mimo tradycji.", 0),
+     "ŚMIERTELNIE TRUJĄCY. Wywołuje reakcję alergiczną na białko grzyba, "
+     "prowadzącą do rozpadu krwinek czerwonych. Uczulenie narasta przy "
+     "kolejnych kontaktach, więc zatrucie może wystąpić nagle po latach "
+     "bezobjawowego spożywania. Do lat 70. XX w. uznawany za jadalny — "
+     "starsze atlasy i rodzinna tradycja bywają tu mylące.", 0),
 ]
 
 # species_id -> [(kolor, czesc), ...]
@@ -661,6 +706,8 @@ KOLORY_SP = {
     49:[("zolty","kapelusz"),("brazowy","kapelusz"),("czarny","miazsz")],
     50:[("brazowy","kapelusz"),("oliwkowy","kapelusz"),("brazowy","trzon"),
         ("brazowy","hymenofor"),("kremowy","miazsz")],
+    51:[("brazowy","kapelusz"),("rudy","kapelusz"),("ciemnobrazowy","trzon"),
+        ("rudy","hymenofor"),("bialy","miazsz")],
 }
 
 SIEDL_SP = {
@@ -714,6 +761,7 @@ SIEDL_SP = {
     48:["las liściasty","las mieszany"],
     49:["las liściasty","las iglasty","las mieszany","bory sosnowe"],
     50:["las liściasty","las mieszany","brzeziny","parki i zadrzewienia"],
+    51:["drewno martwe","las liściasty","las mieszany","las iglasty"],
 }
 
 # (species_id, similar_id, roznice, waga)  waga 3 = pomylka smiertelna
@@ -812,6 +860,49 @@ LOOKALIKES = [
             "które dają się oddzielić od kapelusza i brązowieją po dotknięciu.", 3),
     (5, 50, "Krowiak podwinięty ma blaszki zamiast rurek, silnie podwinięty brzeg "
             "kapelusza i blaszki brązowiejące po uciśnięciu. Jest śmiertelnie trujący.", 3),
+
+    # --- uzupelnienia po weryfikacji z atlasem Snowarskiego ---
+    (11, 9, "Maślak zwyczajny ma wyraźny błoniasty pierścień na trzonie. "
+            "Maślak ziarnisty pierścienia nie ma, za to u młodych owocników "
+            "z porów wydzielają się mleczne kropelki, a górna część trzonu "
+            "pokryta jest drobnymi ziarenkami.", 1),
+    (9, 11, "Maślak ziarnisty nie ma pierścienia i ma ziarenka na trzonie.", 1),
+
+    (12, 25, "Gąska zielonka ma podobnie zielonkawy kapelusz, ale siarkowożółte "
+             "blaszki i nie ma ani pierścienia, ani pochwy. Muchomor sromotnikowy "
+             "ma blaszki zawsze białe, pierścień i workowatą pochwę.", 3),
+    (25, 12, "Muchomor sromotnikowy ma białe blaszki, pierścień na trzonie "
+             "i workowatą pochwę u podstawy. Zielonka ma siarkowożółte blaszki "
+             "i nie ma żadnej z tych struktur.", 3),
+
+    (12, 21, "Czubajka kania jest znacznie większa, ma ruchomy pierścień, "
+             "wężykowaty deseń na trzonie i nie ma pochwy. Ta pomyłka wymaga "
+             "całkowitej nieznajomości obu gatunków, ale bywa zgłaszana "
+             "przy zatruciach.", 3),
+
+    (21, 15, "Muchomor plamisty ma białe brodawki na brązowym kapeluszu, "
+             "gładki pierścień i kołnierzyk nad bulwiastą podstawą. Kania ma "
+             "odstające brązowe łuski, ruchomy pierścień i wężykowaty trzon.", 3),
+
+    (22, 21, "Kania jest wyższa i smuklejsza, ma wężykowaty deseń na trzonie, "
+             "a jej miąższ nie zmienia barwy. Czubajka gwiaździsta ma gładki "
+             "trzon i miąższ wyraźnie czerwieniejący po przekrojeniu.", 1),
+
+    (30, 39, "Kolczak obłączasty bywa łudząco podobny z wierzchu, ale pod "
+             "kapeluszem ma miękkie kolce zamiast rozwidlonych fałdek. "
+             "Obydwa są jadalne, więc pomyłka nie jest groźna.", 1),
+    (39, 30, "Pieprznik ma grube, rozwidlone fałdki zbiegające na trzon "
+             "i zapach moreli. Kolczak ma pod kapeluszem miękkie, kruche kolce.", 1),
+
+    (51, 46, "Hełmówka obrzeżona ma trzon pod pierścieniem GŁADKI, pokryty "
+             "tylko białawymi włóknami, bez łuseczek, i rośnie głównie "
+             "na drewnie iglastym. Łuszczak ma trzon wyraźnie łuseczkowaty "
+             "i wybiera drewno liściaste.", 3),
+    (46, 51, "Łuszczak zmienny ma trzon pod pierścieniem gęsto pokryty "
+             "łuseczkami i rośnie na drewnie liściastym. Hełmówka ma trzon "
+             "gładki, włóknisty, i preferuje drewno iglaste.", 3),
+    (51, 23, "Opieńka miodowa jest większa, ma kremowe blaszki i biały wysyp "
+             "zarodników. Łuszczak ma blaszki cynamonowe i rdzawy wysyp.", 1),
     (50, 44, "Płachetka ma wyraźny biały pierścień i rdzawe blaszki, które nie "
              "dają się oddzielić od kapelusza.", 2),
     # podgrzybek <-> borowik
@@ -886,6 +977,8 @@ KUCHNIA = {
     "i smaży w panierce jak kotlety.",
 42: "Tylko młode, białe owocniki, po ugotowaniu i najlepiej przyrządzone "
     "w dniu zbioru — na zupę krem lub smażone; nigdy z alkoholem.",
+51: "Używa się wyłącznie kapeluszy (trzony są włókniste) — smażone "
+    "lub duszone; grzyb ceniony w kuchni niemieckiej i austriackiej.",
 43: "Suszony, potem namoczony — używany głównie w kuchni azjatyckiej "
     "do zup i dań smażonych, ceniony za chrupiącą konsystencję.",
 44: "Smażona lub duszona; przed obróbką zdejmuje się skórkę z kapelusza, "
