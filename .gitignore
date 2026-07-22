@@ -1,0 +1,31 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Rusztowanie generowane w CI przez "flutter create"
+/android/
+/ios/
+/linux/
+/macos/
+/windows/
+/web/
+
+# IDE
+*.iml
+.idea/
+.vscode/
+
+# Klucze i lokalne ustawienia
+key.properties
+*.jks
+*.keystore
+
+# Narzedzia do zdjec
+photos_raw/
+*.zip
+manifest_local.json

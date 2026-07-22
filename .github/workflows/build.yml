@@ -1,0 +1,111 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Wersje
+        run: |
+          flutter --version
+          java -version
+
+      # flutter create nadpisuje pubspec.yaml i lib/main.dart,
+      # wiec chowamy pliki projektu przed wygenerowaniem rusztowania.
+      - name: Zabezpiecz pliki projektu
+        run: |
+          mkdir -p /tmp/keep
+          cp pubspec.yaml /tmp/keep/pubspec.yaml
+          cp -r lib /tmp/keep/lib
+          cp analysis_options.yaml /tmp/keep/ 2>/dev/null || true
+
+      - name: Generuj rusztowanie Android
+        run: |
+          flutter create --org pl.atlas --project-name atlas_grzybow \
+                         --platforms=android --overwrite .
+
+      - name: Przywroc pliki projektu
+        run: |
+          rm -rf lib
+          cp -r /tmp/keep/lib lib
+          cp /tmp/keep/pubspec.yaml pubspec.yaml
+          cp /tmp/keep/analysis_options.yaml . 2>/dev/null || true
+
+      - name: Podnies minSdk (wymagane przez sqflite)
+        run: |
+          GRADLE=android/app/build.gradle.kts
+          if [ -f "$GRADLE" ]; then
+            sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 23/' $GRADLE
+          else
+            GRADLE=android/app/build.gradle
+            sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 23/' $GRADLE
+          fi
+          grep -n "minSdk" $GRADLE || true
+
+      - name: Nazwa aplikacji i uprawnienie INTERNET
+        run: |
+          MANIFEST=android/app/src/main/AndroidManifest.xml
+          sed -i 's/android:label="atlas_grzybow"/android:label="Atlas grzybow"/' $MANIFEST
+          if ! grep -q 'permission.INTERNET' $MANIFEST; then
+            sed -i '0,/<manifest[^>]*>/s//&\n    <uses-permission android:name="android.permission.INTERNET"\/>/' $MANIFEST
+          fi
+          echo "--- manifest ---"
+          cat $MANIFEST
+
+      - name: Generuj baze SQLite
+        run: |
+          mkdir -p assets/db
+          python3 tools/build_db.py assets/db/atlas.db
+          ls -la assets/db/
+
+      - name: Zaleznosci
+        run: flutter pub get
+
+      - name: Analiza statyczna
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+        continue-on-error: true
+
+      - name: Build APK (uniwersalny)
+        run: flutter build apk --release
+
+      - name: Build APK (per ABI)
+        run: flutter build apk --release --split-per-abi
+
+      - name: Lista artefaktow
+        run: ls -lah build/app/outputs/flutter-apk/
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-grzybow-apk
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 60
+          if-no-files-found: error
+
+      - name: Release przy tagu
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/*.apk
+          generate_release_notes: true
